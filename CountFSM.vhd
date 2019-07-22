@@ -7,35 +7,40 @@ entity CountFSM is
 		  TS,TL : out std_logic := '0');
 end CountFSM;
 		
- architecture behave of CountFSM is 
-   
- 	signal count : integer range 0 to 25;
-		begin
-	Counter: process(clk)
-		begin
-			if (ST = '1' )then
-				count <= 0;
-				TS <= '0';
-				TL <= '0';
-			elsif(rising_edge(clk))then 
-				count <= count + 1;
-	 		 end if;
-			end process counter;
+	 architecture behave of CountFSM is 
+	   
+	 	signal count : integer range 0 to 20;
+		signal StartTimer: std_logic;
+		signal StartTimer_Trig: std_logic:='0';
+			begin
+		StartTimer <= ST or StartTimer_Trig;
+		Counter: process(clk,count)
+			begin
+				if (StartTimer = '1' )then
+					count <= 0;
+					TS <= '0';
+					TL <= '0';
+				elsif(rising_edge(clk))then 
+					count <= count + 1;
+		 		 end if;
 
-	 Flags: process(count)
-		begin
---		if ( rising_edge(clk)) then	
-			if (count < 5)then 
-				TS<= '1';
-              else  
-				TS <= '0';	
-     			end if;
-			if(count < 15)then	
-				TL<= '1';
-			   else 
-				 TL <= '0';	
-				end if;
---		end if;
-			end process Flags;
-	end behave;	
-		
+				if (count < 5)then 
+					TS<= '1';
+		              else  
+					TS <= '0';	
+	     			end if;
+				if(count < 15)then	
+					TL<= '1';
+				   else 
+					 TL <= '0';	
+					end if;
+				if(count < 15)then	
+					StartTimer_Trig <= '0';
+					elsif(rising_edge(clk)) then 
+						StartTimer_Trig <= '1';
+					
+				  end if;
+					end process counter;
+	
+		end behave;	
+			
