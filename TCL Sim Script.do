@@ -9,11 +9,7 @@ vsim -gui work.unitrasgnlcounttop
 # Loading work.unitrasgnlcount(behave)
 # Loading work.countfsm(behave)
 add wave -r /*
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
-#           File in use by: SYSTEM101  Hostname: DESKTOP-0HLDE3P  ProcessID: 16256
-#           Attempting to use alternate WLF file "./wlfthk1ds6".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlfthk1ds6
+
 force -freeze sim:/unitrasgnlcounttop/clk_in 1 0, 0 {5000 ps} -r {10 ns}
 force -freeze sim:/unitrasgnlcounttop/rst_in 1 0
 force -freeze sim:/unitrasgnlcounttop/Ta_in 0 0
